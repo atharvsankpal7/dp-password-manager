@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -82,11 +82,18 @@ interface NewDocumentPageProps {
   };
 }
 
-export default function NewDocumentPage({ params }: NewDocumentPageProps) {
+export default async function NewDocumentPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string}>;
+  searchParams: Promise<any>;
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  // params =  await params
-  const clientId = params.id;
+  const param = await params;
+
+  const { id: clientId } = param;
   const [showPassword, setShowPassword] = useState(false);
   const [showPin, setShowPin] = useState(false);
 

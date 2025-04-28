@@ -4,12 +4,12 @@ import DocumentVersion from "@/lib/db/models/documentVersion";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: {  params: Promise<{ id: string }> }
 ) {
   try {
-    params = await params;
+    const p = await params;
 
-    const documentId = params.id;
+    const documentId = p.id;
 
     if (!documentId) {
       return NextResponse.json(

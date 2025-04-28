@@ -51,17 +51,13 @@ const formSchema = z.object({
     }),
 });
 
-interface EditDocumentPageProps {
-  params: {
-    id: string;
-    documentId: string;
-  };
-
-  searchParams: Record<string, string | string[] | undefined>;
-}
-
-
-export default function EditDocumentPage({params}: EditDocumentPageProps) {
+export default async function EditDocumentPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<any>;
+  searchParams: Promise<any>;
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [documentData, setDocumentData] = useState<{
@@ -75,8 +71,9 @@ export default function EditDocumentPage({params}: EditDocumentPageProps) {
   const [showPin, setShowPin] = useState(false);
 
   const router = useRouter();
+  const param = await params;
 
-    const { id: clientId, documentId } = params ;
+  const { id: clientId, documentId } = param;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -280,16 +277,15 @@ export default function EditDocumentPage({params}: EditDocumentPageProps) {
                     <FormItem>
                       <FormLabel>Client PIN</FormLabel>
                       <FormControl>
-                     
                         <div className="flex justify-center items-center gap-3">
-                        <Input
+                          <Input
                             type={showPin ? "text" : "password"}
                             inputMode="numeric"
                             pattern="[0-9]*"
                             maxLength={4}
                             placeholder="Enter client's 4-digit PIN"
                             {...field}
-                          /> 
+                          />
                           <Button
                             variant={"outline"}
                             onClick={() => setShowPin((prev) => !prev)}

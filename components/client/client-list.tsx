@@ -26,7 +26,7 @@ export default function ClientList({ clients }: ClientListProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {clients.map((client) => (
           <Card 
-            key={client._id}
+            key={client.id}
             className="overflow-hidden transition-all hover:shadow-md hover:-translate-y-1 cursor-pointer"
             onClick={() => handleClientClick(client)}
           >

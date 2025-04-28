@@ -6,13 +6,13 @@ import { verifyPin, decryptPassword } from "@/lib/auth/hash";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: {  params: Promise<{ id: string }> }
 ) {
   try {
-    params = await params;
+    const p = await params;
 
     const { pin } = await req.json();
-    const documentId = params.id;
+    const documentId = p.id;
 
     if (!pin || !documentId) {
       return NextResponse.json(

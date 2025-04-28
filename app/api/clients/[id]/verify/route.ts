@@ -5,13 +5,13 @@ import { verifyPin } from "@/lib/auth/hash";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: {  params: Promise<{ id: string }> }
 ) {
   try {
-    params = await params;
+    const p = await params;
 
     const { pin } = await req.json();
-    const clientId = params.id;
+    const clientId = p.id;
 
     if (!pin || !clientId) {
       return NextResponse.json(

@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { IDocumentVersion } from "@/lib/db/models/documentVersion";
 
 interface PasswordDialogProps {
-  document: IDocument | IDocumentVersion;
+  document: IDocument | IDocumentVersion | null;
   clientId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;

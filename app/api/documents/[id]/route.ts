@@ -8,11 +8,11 @@ import { verifyPin, encryptPassword } from "@/lib/auth/hash";
 // GET document (without password)
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: {  params: Promise<{ id: string }> }
 ) {
   try {
-    params = await params;
-    const documentId = params.id;
+    const p = await params;
+    const documentId = p.id;
 
     await connectToDatabase();
 
@@ -38,13 +38,13 @@ export async function GET(
 // UPDATE document
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: {  params: Promise<{ id: string }> }
 ) {
   try {
-    params = await params;
-
+    // params = await params;
+    const p = await params
     const { username, email, mobileNumber, password, pin } = await req.json();
-    const documentId = params.id;
+    const documentId = p.id;
 
     if (!username || !password || !pin) {
       return NextResponse.json(
